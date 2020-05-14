@@ -3,6 +3,13 @@ import math
 
 class Neuron:
     def __init__(self, weights, lamb, alpha):
+        '''
+        Configura cada neurônio
+
+        :param weights: pesos do neurônio
+        :param lamb: lambda
+        :param alpha: alfa
+        '''
         self.weights = weights
         self.bias = 1
         self.lamb = lamb
@@ -12,10 +19,21 @@ class Neuron:
         self.output = 0
 
     def __activate(self, value):
+        '''
+        Realiza a ativação da saída do neurônio
+
+        :param value: saída intermediária
+        :return: saída ativada
+        '''
         return 1 / (1 + math.exp(-self.lamb * value))
 
     def run(self, inputs):
+        '''
+        Roda um processo pelo neurônio
 
+        :param inputs: entradas do neurônio
+        :return: saída do neurônio
+        '''
         self.inputs = inputs
 
         if len(self.inputs) != len(self.weights) - 1:
@@ -31,6 +49,13 @@ class Neuron:
         return self.output
 
     def update(self, error):
+        '''
+        Realiza a atualização dos pesos do neurônio com base no erro.
+        Seu retorno são os erros para neurônios nas camadas anteriores.
+
+        :param error: erro obtido
+        :return: erros para os neurônios anteriores
+        '''
         theta = 0.5 * self.lamb * (1 - (self.output * self.output))
 
         delta = error * theta
